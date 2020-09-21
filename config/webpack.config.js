@@ -24,6 +24,7 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const pxtorem = require('postcss-pxtorem');
 
 const postcssNormalize = require('postcss-normalize');
 
@@ -69,6 +70,12 @@ module.exports = function (webpackEnv) {
   const getStyleLoaders = (cssOptions, preProcessor) => {
     const loaders = [
       isEnvDevelopment && require.resolve('style-loader'),
+      isEnvDevelopment && {
+        loader: require.resolve('dts-css-modules-loader'),
+        options: {
+          namedExport: true
+        }
+      },
       isEnvProduction && {
         loader: MiniCssExtractPlugin.loader,
         // css is located in `static/css`, use '../../' to locate index.html folder
@@ -91,6 +98,10 @@ module.exports = function (webpackEnv) {
           // https://github.com/facebook/create-react-app/issues/2677
           ident: 'postcss',
           plugins: () => [
+            ...isEnvProduction ? [pxtorem({
+              mediaQuery: true,
+              propList: ['*', '!border']
+            })] : [],
             require('postcss-flexbugs-fixes'),
             require('postcss-preset-env')({
               autoprefixer: {

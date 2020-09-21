@@ -66,7 +66,9 @@
   "devDependencies": {
     "breakpoint-sass": "^2.7.1",
     "classnames": "^2.2.6",
+    "dts-css-modules-loader": "^1.0.4",
     "node-sass": "^4.13.0",
+    "postcss-pxtorem": "^5.1.1",
     "typescript": "3.9.6"
   },
   "scripts": {

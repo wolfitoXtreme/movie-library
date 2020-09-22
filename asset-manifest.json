@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/movie-library/static/css/main.9d4f164b.chunk.css",
+    "main.js": "/movie-library/static/js/main.7f4e01f9.chunk.js",
+    "main.js.map": "/movie-library/static/js/main.7f4e01f9.chunk.js.map",
+    "runtime-main.js": "/movie-library/static/js/runtime-main.cba2209a.js",
+    "runtime-main.js.map": "/movie-library/static/js/runtime-main.cba2209a.js.map",
+    "static/css/2.5e188a09.chunk.css": "/movie-library/static/css/2.5e188a09.chunk.css",
+    "static/js/2.682f57e8.chunk.js": "/movie-library/static/js/2.682f57e8.chunk.js",
+    "static/js/2.682f57e8.chunk.js.map": "/movie-library/static/js/2.682f57e8.chunk.js.map",
+    "index.html": "/movie-library/index.html",
+    "precache-manifest.368829bed9e4e0750faf3e4bff5dbce2.js": "/movie-library/precache-manifest.368829bed9e4e0750faf3e4bff5dbce2.js",
+    "service-worker.js": "/movie-library/service-worker.js",
+    "static/css/2.5e188a09.chunk.css.map": "/movie-library/static/css/2.5e188a09.chunk.css.map",
+    "static/css/main.9d4f164b.chunk.css.map": "/movie-library/static/css/main.9d4f164b.chunk.css.map",
+    "static/js/2.682f57e8.chunk.js.LICENSE.txt": "/movie-library/static/js/2.682f57e8.chunk.js.LICENSE.txt",
+    "static/media/App.scss": "/movie-library/static/media/opensans-semibold.c938d4e7.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.cba2209a.js",
+    "static/css/2.5e188a09.chunk.css",
+    "static/js/2.682f57e8.chunk.js",
+    "static/css/main.9d4f164b.chunk.css",
+    "static/js/main.7f4e01f9.chunk.js"
+  ]
+}

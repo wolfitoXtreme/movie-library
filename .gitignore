@@ -26,4 +26,7 @@ yarn-error.log*
 .vscode/
 
 # sass type definitions
-*/**/*.sass.d.ts
+**/*.scss.d.ts
+
+# hidden
+**/keys.*

@@ -1,8 +1,18 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 # Movie Library
+Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cum eveniet harum ipsam, atque at, nostrum officia, quisquam libero iste commodi quibusdam. Rem consequatur omnis saepe eos repudiandae corrupti quia quaerat.
 
-Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cum eveniet harum ipsam, atque at, nostrum officia, quisquam libero iste commodi quibusdam. Rem consequatur omnis saepe eos repudiandae corrupti quia quaerat!
+[site](https://wolfitoxtreme.github.io/movie-library/)
+
+## Wish List
+  - Filter by Genre
+  - Lazy loading
+  - Use of Redux
+  - Movie details screen
+  - Icon for search field
+  - Use of advanced linter options (ex. auto formatting, specific warnings)
+  - Load spinner
 
 ## Available Scripts
 

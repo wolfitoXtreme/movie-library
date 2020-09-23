@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 
-import classNames from "classnames";
-import { root, content, titleBlock, date, image, description } from './ListItem.scss';
+import { root, content, titleBlock, date, image, noImage, icon, description } from './ListItem.scss';
 
 interface ListItemProps {
   itemData: { [key: string]: any }
 }
 
 const ListItem: React.FC<ListItemProps> = ({ itemData }) => {
+  const [imageError, setImageError] = useState(false);
+
   const maxOverviewLength = 150;
+
+  const coverPath = 'https://image.tmdb.org/t/p/w185/';
   const { title, release_date: release, poster_path: cover, overview } = itemData;
-  const coverPath = 'https://image.tmdb.org/t/p/w185/'
+
+  const imageReplace = () => setImageError(true);
 
   return (
     <li className={root}>
@@ -21,7 +25,7 @@ const ListItem: React.FC<ListItemProps> = ({ itemData }) => {
         </div>
         <div className={image}>
           <figure>
-            <img src={coverPath + cover} width="" height="" alt={title} />
+            {!imageError && (<img src={coverPath + cover} width="" height="" alt={title} onError={imageReplace} />) || <p className={noImage}><span className={icon}></span>No image</p>}
           </figure>
         </div>
         <div className={description}>

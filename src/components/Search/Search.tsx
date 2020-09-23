@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import classNames from "classnames";
 
 import keys from "@app/keys.json";
 import { default as searchRequest } from "./SearchRequest";
@@ -15,37 +14,30 @@ const CancelToken = axios.CancelToken;
 let cancelRequest;
 
 const Search: React.FC = () => {
-
   const [results, setResults] = useState([]);
+  const [searchText, setSearchText] = useState<string | never>();
 
   const { TMDB: { key: apiKey } } = keys;
-  console.log(apiKey);
-
-  // const testQuery = 'https://api.themoviedb.org/3/search/movie?api_key=b0051197ce34bf52555943ba1b4f5d4d&query=Jack+Reacher';
+  const initial = useRef(true);
 
   /*
+  // trending
+  - https://api.themoviedb.org/3/trending/movie/week?api_key=b0051197ce34bf52555943ba1b4f5d4d
   // Search
   - https://api.themoviedb.org/3/search/movie?api_key=b0051197ce34bf52555943ba1b4f5d4d&language=en-US&page=1&include_adult=false
   // Genre
   - https://api.themoviedb.org/3/genre/movie/list?api_key=b0051197ce34bf52555943ba1b4f5d4d&language=en-US
-  // trending
-  - https://api.themoviedb.org/3/trending/movie/week?api_key=b0051197ce34bf52555943ba1b4f5d4d
   */
-
 
   const urls = {
     trending: 'trending/movie/week?api_key=',
-    search: 'search/movie?api_key=',
-    genre: 'genre/movie/list?api_key=',
+    search: 'search/movie?api_key='
   };
 
-  // const testQuery = urls.genre + apiKey + '&language=en-US';
-  // const testQuery = urls.search + apiKey + '&language=en-US' + '&query=Jack+Reacher';
-  const testQuery = urls.trending + apiKey;
+  const searchURL = initial.current ? urls.trending + apiKey : urls.search + apiKey + '&language=en-US&page=1&include_adult=true&';
 
-  console.log('testQuery: ' + testQuery);
-
-  const getResults = async (url) => {
+  const getResults = async (url, query?: string) => {
+    console.log('getResults URL:', url, initial.current);
     const response: any = await searchRequest.get(url, {
       cancelToken: new CancelToken(c => {
         // this function will receive a cancel function as a parameter
@@ -53,68 +45,12 @@ const Search: React.FC = () => {
       })
     })
       .then(function (response) {
-        // handle success
-        console.log(
-          "searching!! resuts are -> ",
-          response,
-          // " with firter ->",
-          // query,
-          "and URL ->",
-          url
-        );
-
-        // const filteredResults = response.data.filter(result => {
-        //   console.log("filteredResults", result);
-        //   return result.name.toLowerCase().includes(query.toLowerCase());
-        // });
-
-        // console.log('"searching!! filtered resuts are ->', filteredResults);
-
-        // const sortByName = (a, b) => {
-        //   const nameA = a.name.toUpperCase();
-        //   const nameB = b.name.toUpperCase();
-        //   let comparison = 0;
-        //   if (nameA > nameB) {
-        //     comparison = 1;
-        //   } else if (nameA < nameB) {
-        //     comparison = -1;
-        //   }
-        //   return comparison;
-        // };
-
-        // const sortResults = results => {
-        //   console.log("groups before filtering:", results);
-        //   const groups = results.filter(result => {
-        //     console.log("filteredResults", result);
-        //     return result.type.includes("group");
-        //   });
-
-        //   groups.sort(sortByName);
-
-        //   const items = results.filter(result => {
-        //     console.log("filteredResults", result);
-        //     return result.type.includes("item");
-        //   });
-
-        //   items.sort(sortByName);
-        //   console.log("groups:", groups, items);
-        //   return [...groups, ...items];
-        // };
-
-        // console.log("filteredResults: ", filteredResults);
-        // return sortResults(filteredResults);
-
-        // const { results } = response.data;
-
-        console.log('results are: ', response.data);
         const { data: { results } } = response;
+
         return results;
       })
       .catch(error => {
-        // handle error
-        // console.log(error);
         if (axios.isCancel(error)) {
-          console.log("error cancelled", error.message);
           return [];
         } else {
           console.log("error", error.message);
@@ -125,20 +61,31 @@ const Search: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log('useEffect...');
-    if (cancelRequest) {
-      cancelRequest("Request canceled.");
+    if (!searchText || searchText.length <= searchThreshold) {
+      console.log("useEffect");
+      if (cancelRequest) {
+        cancelRequest("Request canceled.");
+      }
+      if (!searchText || initial.current) {
+        getResults(urls.trending + apiKey);
+        return
+      }
+      setResults([]);
+      return;
     }
-    // setResult([]);
-    // return;
-
-    getResults(testQuery);
-  }, [testQuery]);
+    initial.current = false;
+    getResults(searchURL + 'query=' + encodeURI(searchText));
+  }, [searchText]);
 
   return (
     <main className={root}>
       <h5>Trending movies</h5>
-      <SearchField />
+      <SearchField
+        fieldName="search"
+        label="Find a movie"
+        placeholder="Find a movie..."
+        setSearchText={setSearchText}
+      />
       {results && results.length > 0 && (
         <ul className={list}>
           {results.map(item => {
@@ -149,7 +96,7 @@ const Search: React.FC = () => {
             );
           })}
         </ul>
-      )}
+      ) || <p>nothing found...</p>}
       {/* <pre>{JSON.stringify(results, null, 2)}</pre> */}
     </main>
   );

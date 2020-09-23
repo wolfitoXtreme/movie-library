@@ -3,6 +3,7 @@
 .root {
   padding: 0 10px 10px;
   border-bottom: 1px solid $light-grey;
+  grid-area: header;
   background-color: $gainsboro;
 
   h1 {

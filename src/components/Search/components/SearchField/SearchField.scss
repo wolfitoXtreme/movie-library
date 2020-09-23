@@ -1,4 +1,17 @@
-.test {
-  margin-bottom: 10px;
-  background-color: pink;
+@import "~@styles/config/variables";
+@import "~@styles/helpers/mixins";
+
+.root {
+  margin: 10px -20px;
+  padding: 10px 20px;
+  background-color: $nero;
+  label {
+    @include hidden;
+  }
+
+  input[type="text"] {
+    padding: 5px;
+    border: 4px solid $light-grey;
+    border-radius: 5px;
+  }
 }

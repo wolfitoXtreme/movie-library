@@ -1,7 +1,6 @@
 {
   "include": [
-    "./src/*",
-    "src/components/TestComponent/global.d.ts"
+    "./src/*"
   ],
   "compilerOptions": {
     "lib": [
@@ -22,6 +21,15 @@
     "isolatedModules": true,
     "noEmit": true,
     "noResolve": false,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "baseUrl": "./src",
+    "paths": {
+      "@app/*": [
+        "*"
+      ],
+      "@styles/*": [
+        "scss"
+      ]
+    }
   }
 }

@@ -1,0 +1,39 @@
+@import "~@styles/config/variables";
+@import "~@styles/helpers/mixins";
+
+.root {
+  padding: 8px 12px;
+  margin: 10px;
+  width: 100%;
+  border: 1px solid $gainsboro;
+  border-radius: 4px;
+  box-shadow: 3px 3px 5px rgba($light-grey, 0.5);
+  flex: 1 0 auto;
+
+  &:before {
+    display: none;
+  }
+
+  @include breakpoint(map-get($breakpoints, small)) {
+    width: 50%;
+  }
+
+  @include breakpoint(map-get($breakpoints, medium)) {
+    width: (100% / 3);
+  }
+
+  @include breakpoint(map-get($breakpoints, medium)) {
+    width: (100% / 5);
+  }
+}
+
+.title-block {
+  background-color: grey;
+
+  .date {
+    font-size: 12px;
+  }
+}
+.description {
+  background-color: pink;
+}

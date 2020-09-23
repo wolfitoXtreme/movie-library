@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import WebFontLoader from "webfontloader";
 
+import WebFontLoader from "webfontloader";
 import './scss/App.scss';
 
-import "./scss/App.scss";
-
+import Search from './components/Search/Search';
 
 interface Props {
   test: string;
@@ -37,7 +36,8 @@ function App() {
           <h1>Movie Library</h1>
         </header>
         <main>
-          Main content here
+          Main content here<br />
+          <Search />
         </main>
         <footer>
           Footer here

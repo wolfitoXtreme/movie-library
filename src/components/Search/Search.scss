@@ -1,0 +1,13 @@
+@import "~@styles/config/variables";
+
+.root {
+  margin: 0 auto;
+  max-width: $app-max-width;
+  // background-color: purple;
+}
+
+.list {
+  margin: -10px;
+  display: flex;
+  flex-wrap: wrap;
+}

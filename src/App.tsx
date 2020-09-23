@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import WebFontLoader from "webfontloader";
 import './scss/App.scss';
 
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 import Search from './components/Search/Search';
 
 interface Props {
@@ -32,16 +34,9 @@ function App() {
   return (
     <>
       { fontsReady && (<>
-        <header>
-          <h1>Movie Library</h1>
-        </header>
-        <main>
-          Main content here<br />
-          <Search />
-        </main>
-        <footer>
-          Footer here
-        </footer>
+        <Header />
+        <Search />
+        <Footer />
       </>)}
     </>
   );

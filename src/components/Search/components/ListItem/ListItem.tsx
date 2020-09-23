@@ -1,7 +1,7 @@
 import React from "react";
 
 import classNames from "classnames";
-import { root, titleBlock, date, description } from './ListItem.scss';
+import { root, content, titleBlock, date, image, description } from './ListItem.scss';
 
 interface ListItemProps {
   itemData: { [key: string]: any }
@@ -14,13 +14,17 @@ const ListItem: React.FC<ListItemProps> = ({ itemData }) => {
 
   return (
     <li className={root}>
-      <div>
+      <div className={content}>
         <div className={titleBlock}>
           <h4>{title}</h4>
           <span className={date}>{release}</span>
         </div>
-        <img src={coverPath + cover} width="" height="" alt={title} className={cover} />
-        <div>
+        <div className={image}>
+          <figure>
+            <img src={coverPath + cover} width="" height="" alt={title} />
+          </figure>
+        </div>
+        <div className={description}>
           <p>
             {overview.substring(0, maxOverviewLength)} {overview.length > maxOverviewLength && '...'}
           </p>

@@ -2,38 +2,91 @@
 @import "~@styles/helpers/mixins";
 
 .root {
-  padding: 8px 12px;
+  $side-margin: 10px;
+
+  padding: 15px 12px 25px;
   margin: 10px;
-  width: 100%;
+  width: calc(100% - #{($side-margin * 2)});
   border: 1px solid $gainsboro;
   border-radius: 4px;
   box-shadow: 3px 3px 5px rgba($light-grey, 0.5);
-  flex: 1 0 auto;
+  flex-shrink: 0;
+  flex-grow: 1;
 
   &:before {
     display: none;
   }
 
   @include breakpoint(map-get($breakpoints, small)) {
-    width: 50%;
+    width: calc(50% - #{($side-margin * 2)});
   }
 
   @include breakpoint(map-get($breakpoints, medium)) {
-    width: (100% / 3);
+    width: calc(#{100% / 3} - #{($side-margin * 2)});
   }
 
-  @include breakpoint(map-get($breakpoints, medium)) {
-    width: (100% / 5);
+  @include breakpoint(map-get($breakpoints, large)) {
+    width: calc(#{100% / 4} - #{($side-margin * 2)});
+  }
+
+  @include breakpoint(1250px) {
+    width: calc(#{100% / 5} - #{($side-margin * 2)});
   }
 }
 
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
 .title-block {
-  background-color: grey;
+  margin-bottom: 10px;
+  padding: 0 0 5px;
+  border: 0 solid $light-grey;
+  border-bottom-width: 8px;
+  order: 2;
+
 
   .date {
     font-size: 12px;
   }
 }
+
+.image {
+  margin-bottom: 10px;
+  height: 150px;
+  order: 1;
+
+  @include breakpoint(map-get($breakpoints, small)) {
+    height: 200px;
+  }
+
+  @include breakpoint(map-get($breakpoints, medium)) {
+    height: 250px;
+  }
+
+  @include breakpoint(map-get($breakpoints, large)) {
+    height: 300px;
+  }
+
+  figure {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    height: 100%;
+    display: block;
+  }
+
+  img {
+    margin: 0 auto;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
+  }
+}
+
 .description {
-  background-color: pink;
+  order: 3;
 }

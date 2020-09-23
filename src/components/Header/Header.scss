@@ -1,0 +1,12 @@
+@import "~@styles/config/variables";
+
+.root {
+  padding: 0 10px 10px;
+  border-bottom: 1px solid $light-grey;
+  background-color: $gainsboro;
+
+  h1 {
+    margin: 0 auto;
+    max-width: $app-max-width;
+  }
+}

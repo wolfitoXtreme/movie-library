@@ -136,7 +136,8 @@ const Search: React.FC = () => {
   }, [testQuery]);
 
   return (
-    <div className={root}>
+    <main className={root}>
+      <h5>Trending movies</h5>
       <SearchField />
       {results && results.length > 0 && (
         <ul className={list}>
@@ -149,8 +150,8 @@ const Search: React.FC = () => {
           })}
         </ul>
       )}
-      <pre>{JSON.stringify(results, null, 2)}</pre>
-    </div>
+      {/* <pre>{JSON.stringify(results, null, 2)}</pre> */}
+    </main>
   );
 };
 

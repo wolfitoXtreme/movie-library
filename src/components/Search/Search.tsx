@@ -1,13 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 
-import keys from "@app/keys.json";
-import { default as searchRequest } from "./SearchRequest";
+import keys from '@app/keys.json';
+import { default as searchRequest } from './SearchRequest';
 
-import { root, list } from "./Search.scss";
-import SearchField from "./components/SearchField/SearchField";
-import ListItem from "./components/ListItem/ListItem";
-
+import { root, list } from './Search.scss';
+import SearchField from './components/SearchField/SearchField';
+import ListItem from './components/ListItem/ListItem';
 
 const searchThreshold = 0;
 const CancelToken = axios.CancelToken;
@@ -17,7 +16,9 @@ const Search: React.FC = () => {
   const [results, setResults] = useState([]);
   const [searchText, setSearchText] = useState<string | never>();
 
-  const { TMDB: { key: apiKey } } = keys;
+  const {
+    TMDB: { key: apiKey },
+  } = keys;
   const initial = useRef(true);
 
   /*
@@ -29,31 +30,35 @@ const Search: React.FC = () => {
   - https://api.themoviedb.org/3/genre/movie/list?api_key=b0051197ce34bf52555943ba1b4f5d4d&language=en-US
   */
 
-  const urls = {
-    trending: 'trending/movie/week?api_key=',
-    search: 'search/movie?api_key='
+  const { trendingURL, allURL } = {
+    trendingURL: 'trending/movie/week?api_key=' + apiKey,
+    allURL:
+      'search/movie?api_key=' +
+      apiKey +
+      '&language=en-US&page=1&include_adult=true&',
   };
 
-  const searchURL = initial.current ? urls.trending + apiKey : urls.search + apiKey + '&language=en-US&page=1&include_adult=true&';
-
-  const getResults = async (url, query?: string) => {
+  const getResults = async (url) => {
     console.log('getResults URL:', url, initial.current);
-    const response: any = await searchRequest.get(url, {
-      cancelToken: new CancelToken(c => {
-        // this function will receive a cancel function as a parameter
-        cancelRequest = c;
+    const response: any = await searchRequest
+      .get(url, {
+        cancelToken: new CancelToken((c) => {
+          // this function will receive a cancel function as a parameter
+          cancelRequest = c;
+        }),
       })
-    })
       .then(function (response) {
-        const { data: { results } } = response;
+        const {
+          data: { results },
+        } = response;
 
         return results;
       })
-      .catch(error => {
+      .catch((error) => {
         if (axios.isCancel(error)) {
           return [];
         } else {
-          console.log("error", error.message);
+          console.log('error', error.message);
         }
         return;
       });
@@ -62,20 +67,18 @@ const Search: React.FC = () => {
 
   useEffect(() => {
     if (!searchText || searchText.length <= searchThreshold) {
-      console.log("useEffect");
       if (cancelRequest) {
-        cancelRequest("Request canceled.");
+        cancelRequest('Request canceled.');
       }
       if (!searchText || initial.current) {
-        getResults(urls.trending + apiKey);
-        return
+        console.log('default search...');
+        getResults(trendingURL);
+        return;
       }
-      setResults([]);
-      return;
     }
     initial.current = false;
-    getResults(searchURL + 'query=' + encodeURI(searchText));
-  }, [searchText]);
+    getResults(allURL + 'query=' + encodeURI(searchText));
+  }, [searchText, allURL, trendingURL]);
 
   return (
     <main className={root}>
@@ -86,17 +89,14 @@ const Search: React.FC = () => {
         placeholder="Find a movie..."
         setSearchText={setSearchText}
       />
-      {results && results.length > 0 && (
+      {(results && results.length > 0 && (
         <ul className={list}>
-          {results.map(item => {
-
+          {results.map((item) => {
             const { id: itemID } = item;
-            return (
-              <ListItem itemData={item} key={itemID} />
-            );
+            return <ListItem itemData={item} key={itemID} />;
           })}
         </ul>
-      ) || <p>nothing found...</p>}
+      )) || <p>nothing found...</p>}
       {/* <pre>{JSON.stringify(results, null, 2)}</pre> */}
     </main>
   );

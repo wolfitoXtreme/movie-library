@@ -1,8 +1,9 @@
-@import "~@styles/config/variables";
+@import '~@styles/config/variables';
 
 .root {
   margin: 0 auto;
   padding: 10px 10px 40px;
+  width: 100%;
   max-width: $app-max-width;
   grid-area: main;
 }

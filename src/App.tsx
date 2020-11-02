@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import WebFontLoader from "webfontloader";
+import WebFontLoader from 'webfontloader';
 import './scss/App.scss';
 
 import Header from './components/Header/Header';
@@ -18,26 +18,25 @@ function App() {
     // Fetch necessary fonts.
     WebFontLoader.load({
       custom: {
-        families: [
-          'opensasans',
-          'anton'
-        ]
+        families: ['opensasans', 'anton'],
       },
       fontactive: () => {
         setTimeout(() => {
           setFontsReady(true);
         }, 1000);
-      }
+      },
     });
   }, []);
 
   return (
     <>
-      { fontsReady && (<>
-        <Header />
-        <Search />
-        <Footer />
-      </>)}
+      {fontsReady && (
+        <>
+          <Header />
+          <Search />
+          <Footer />
+        </>
+      )}
     </>
   );
 }

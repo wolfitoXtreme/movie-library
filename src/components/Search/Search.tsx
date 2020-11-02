@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import keys from '@app/keys.json';
@@ -8,18 +8,17 @@ import { root, list } from './Search.scss';
 import SearchField from './components/SearchField/SearchField';
 import ListItem from './components/ListItem/ListItem';
 
-const searchThreshold = 0;
+const searchThreshold = 3;
 const CancelToken = axios.CancelToken;
 let cancelRequest;
 
 const Search: React.FC = () => {
   const [results, setResults] = useState([]);
-  const [searchText, setSearchText] = useState<string | never>();
+  const [searchText, setSearchText] = useState<string | never>('');
 
   const {
     TMDB: { key: apiKey },
   } = keys;
-  const initial = useRef(true);
 
   /*
   // trending
@@ -39,7 +38,7 @@ const Search: React.FC = () => {
   };
 
   const getResults = async (url) => {
-    console.log('getResults URL:', url, initial.current);
+    console.log('getResults URL:', url);
     const response: any = await searchRequest
       .get(url, {
         cancelToken: new CancelToken((c) => {
@@ -66,18 +65,17 @@ const Search: React.FC = () => {
   };
 
   useEffect(() => {
-    if (!searchText || searchText.length <= searchThreshold) {
+    if (!searchText.length) {
       if (cancelRequest) {
         cancelRequest('Request canceled.');
       }
-      if (!searchText || initial.current) {
-        console.log('default search...');
-        getResults(trendingURL);
-        return;
-      }
+      getResults(trendingURL);
+
+      return;
     }
-    initial.current = false;
-    getResults(allURL + 'query=' + encodeURI(searchText));
+    if (searchText.length > searchThreshold) {
+      getResults(allURL + 'query=' + encodeURI(searchText));
+    }
   }, [searchText, allURL, trendingURL]);
 
   return (
